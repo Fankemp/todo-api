@@ -11,6 +11,13 @@ type TitleTask struct {
 	Text string `json:"title"`
 }
 
+var id = 0
+
+func NextId() int {
+	id++
+	return id
+}
+
 func CreateTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -28,7 +35,7 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 
 	var newTask *models2.Task
 
-	newTask = models2.NewTask(len(dbtest.Tasks)+1, text.Text, false)
+	newTask = models2.NewTask(NextId(), text.Text, false)
 	dbtest.Tasks = append(dbtest.Tasks, newTask)
 
 	w.WriteHeader(http.StatusCreated)
