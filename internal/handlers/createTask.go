@@ -21,6 +21,9 @@ func NextId() int {
 func CreateTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
+	dbtest.Mu.Lock()
+	defer dbtest.Mu.Unlock()
+
 	var text TitleTask
 	err := json.NewDecoder(r.Body).Decode(&text)
 	if err != nil {

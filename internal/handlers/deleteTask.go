@@ -14,6 +14,10 @@ type DeleteDone struct {
 
 func DeleteTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+
+	dbtest.Mu.Lock()
+	defer dbtest.Mu.Unlock()
+
 	query := r.URL.Query()
 	queryId := query.Get("id")
 
