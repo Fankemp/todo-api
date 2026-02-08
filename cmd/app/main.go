@@ -12,9 +12,11 @@ func main() {
 	http.HandleFunc("POST /tasks", handlers.CreateTask)
 	http.HandleFunc("PATCH  /tasks", handlers.UpdateTask)
 
-	midd := middleware.ApiKeyMiddleware(http.DefaultServeMux)
+	var handler http.Handler = http.DefaultServeMux
+	handler = middleware.ApiKeyMiddleware(http.DefaultServeMux)
+	handler = middleware.LoggerMiddleware(handler)
 
-	if err := http.ListenAndServe(":8080", midd); err != nil {
+	if err := http.ListenAndServe(":8080", handler); err != nil {
 		log.Fatal(err)
 	}
 }
