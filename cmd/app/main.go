@@ -12,6 +12,7 @@ func main() {
 	http.HandleFunc("POST /tasks", handlers.CreateTask)
 	http.HandleFunc("PATCH  /tasks", handlers.UpdateTask)
 	http.HandleFunc("DELETE /tasks", handlers.DeleteTask)
+	http.HandleFunc("GET /external", handlers.GetExternalTasks)
 
 	var handler http.Handler = http.DefaultServeMux
 	handler = middleware.ApiKeyMiddleware(http.DefaultServeMux)
